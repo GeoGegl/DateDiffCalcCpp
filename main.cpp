@@ -5,6 +5,12 @@ bool isLeapYear(int year) {
     return (year % 4 == 0 && year % 100 != 0);
 }
 
+bool isValidDate(int year, int month, int day) {
+    if (month < 1 || month > 12) return false;
+    if (day < 1 || day > 31) return false;
+    return true;
+}
+
 int daysInMonth(int year, int month) {
     static const int days_per_month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     if (month == 2 && isLeapYear(year)) {
@@ -44,10 +50,20 @@ int main() {
     std::cout << "Enter the first date (YYYY MM DD): ";
     std::cin >> year1 >> month1 >> day1;
 
+    if (!isValidDate(year1, month1, day1)) {
+        std::cerr << "Invalid date!" << std::endl;
+        return 1;
+    }
+
     std::cout << "Enter the second date (YYYY MM DD): ";
     std::cin >> year2 >> month2 >> day2;
 
-    int daysDifference = calculateDaysDifference(year1, month1, day1, year2, month2, day2);
+    if (!isValidDate(year2, month2, day2)) {
+        std::cerr << "Invalid date!" << std::endl;
+        return 2;
+    }
+
+    short daysDifference = calculateDaysDifference(year1, month1, day1, year2, month2, day2);
     std::cout << "Number of days between dates: " << daysDifference << std::endl;
 
     return 0;
